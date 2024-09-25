@@ -1,32 +1,30 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import './App.css';
+import { PostList } from './components/PostList';
 
 function App() {
-  const [data, setData] =useState([])
+  const [data, setData] = useState([]);
 
-  useEffect(() => {
+  const fetchData = () => {
     fetch('https://jsonplaceholder.typicode.com/posts')
-    .then((response) =>response.json)
-    .then((data) => setData(data))
-  }, [])
+      .then((response) => response.json())
+      .then((data) => setData(data));
+  }
 
-  return (
-    <>
-      <ul>
-        {
-        data.map(item => (
-          <li key={item.id}>
-            <h3>{item.title}</h3>
-            <p>body:{item.body}</p>
+useEffect(() => {
+  fetchData()
+},[])
 
-          </li>
-        ))
-        }
-      </ul>
-    </>
-  )
+function handleButtonClick(){
+  fetchData()
 }
 
-export default App
+  return (
+    <button className='get-data-btn' onClick={handleButtonClick}>Click</button>
+    {!!data.length && <PostList data={data} />}
+    );
+}
+
+export default App;
