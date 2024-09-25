@@ -11,20 +11,24 @@ function App() {
     fetch('https://jsonplaceholder.typicode.com/posts')
       .then((response) => response.json())
       .then((data) => setData(data));
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  function handleButtonClick() {
+    fetchData();
   }
 
-useEffect(() => {
-  fetchData()
-},[])
-
-function handleButtonClick(){
-  fetchData()
-}
-
   return (
-    <button className='get-data-btn' onClick={handleButtonClick}>Click</button>
-    {!!data.length && <PostList data={data} />}
-    );
+    <>
+      <button className="get-data-btn" onClick={handleButtonClick}>
+        Click
+      </button>
+      {!!data.length && <PostList data={data} />}
+    </>
+  );
 }
 
 export default App;
